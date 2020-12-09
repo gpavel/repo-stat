@@ -1,0 +1,15 @@
+{
+  "name": "repo-stat",
+  "version": "1.0.0",
+  "description": "Get statistic of a repository",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HPavel",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.1.2"
+  }
+}
