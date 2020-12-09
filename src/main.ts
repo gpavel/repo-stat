@@ -1,10 +1,10 @@
-import { GithubRepositoryParser } from "./GithubRepositoryParser";
+import { GithubRepositoryFetcher } from "./GithubRepositoryFetcher";
 import { RepositoryAnalyzer } from "./RepositoryAnalyzer";
 import { SimpleLogger } from "./SimpleLogger";
 
 export async function main(args: string[]): Promise<void> {
   const repositoryAnalyzer = new RepositoryAnalyzer(new SimpleLogger());
-  repositoryAnalyzer.registerParser(new GithubRepositoryParser());
+  repositoryAnalyzer.registerFetcher(new GithubRepositoryFetcher());
 
   for (let repositoryUrl of args) {
     console.log('Analizing', { repositoryUrl });

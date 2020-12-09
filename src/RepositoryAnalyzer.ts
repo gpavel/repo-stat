@@ -1,26 +1,26 @@
 import { unsupportedRepositoryUrl } from "./errors";
-import { Logger, RepositoryParser, RepositoryStatistic } from "./models";
+import { Logger, RepositoryFetcher, RepositoryStatistic } from "./models";
 
 export class RepositoryAnalyzer {
-  private parsers: RepositoryParser[] = [];
+  private fetchers: RepositoryFetcher[] = [];
 
   constructor(public logger: Logger) {
   }
 
-  registerParser(parser: RepositoryParser): void {
-    this.parsers = this.parsers.concat(parser);
+  registerFetcher(fetcher: RepositoryFetcher): void {
+    this.fetchers = this.fetchers.concat(fetcher);
   }
 
   analyze(repositoryUrl: string): Promise<RepositoryStatistic> {
-    const repositoryParser = this.parsers.find(parser => parser.canParse(repositoryUrl));
+    const repositoryFetcher = this.fetchers.find(fetcher => fetcher.canFetch(repositoryUrl));
 
-    if (!repositoryParser) {
-      this.logger.warn("Parser has not been found for the URL " + repositoryUrl);
+    if (!repositoryFetcher) {
+      this.logger.warn("Fetcher has not been found for the URL " + repositoryUrl);
       return unsupportedRepositoryUrl(repositoryUrl);
     }
 
-    this.logger.log("Parser is found", { repositoryParser });
+    this.logger.log("Fetcher is found", { repositoryFetcher });
 
-    return repositoryParser.parse(repositoryUrl);
+    return repositoryFetcher.fetch(repositoryUrl);
   }
 }

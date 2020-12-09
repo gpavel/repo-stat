@@ -4,15 +4,16 @@ export interface RepositoryCommitInfo {
 }
 
 export interface RepositoryStatistic {
-  url: string;
+  user: string;
+  project: string;
   stars: number;
   commitsPerWeekOverYear: number;
   recentCommits: RepositoryCommitInfo[];
 }
 
-export interface RepositoryParser {
-  canParse(repositoryUrl: string): boolean;
-  parse(repositoryUrl: string): Promise<RepositoryStatistic>;
+export interface RepositoryFetcher {
+  canFetch(repositoryUrl: string): boolean;
+  fetch(repositoryUrl: string): Promise<RepositoryStatistic>;
 }
 
 export interface Logger {
