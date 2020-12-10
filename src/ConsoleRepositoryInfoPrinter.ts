@@ -7,7 +7,7 @@ export class ConsoleRepositoryInfoPrinter implements RepositoryInfoPrinter {
     const printable = {
       user: info.user,
       repo: info.project,
-      stars: info.stars,
+      stars: info.stars || '0',
       'Commits per week over year, avg.': info.commitsPerWeekOverYear,
     }
     return TtyTable(
@@ -17,7 +17,10 @@ export class ConsoleRepositoryInfoPrinter implements RepositoryInfoPrinter {
   }
 
   printCommitsInfo(commits: CommitInfo[]): string {
-    const printableMessages = commits.map(({ message }, index) => ({ index, message }));
+    const printableMessages = commits.map(
+      ({ message }, index) => ({ message, index: index.toString(10) }),
+    );
+
     return TtyTable(
       [
         { value: 'index' } as Header,

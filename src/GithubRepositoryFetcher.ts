@@ -97,6 +97,7 @@ export class GithubRepositoryFetcher implements RepositoryFetcher {
         project: basicInfo.project,
       };
     } catch (error: GithubRepositoryFetcherError | unknown) {
+      console.error(error);
       if (error instanceof GithubRepositoryFetcherError) {
         switch(error.statusCode) {
           case HttpStatusCode.MovedPermanently:
