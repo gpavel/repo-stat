@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/core';
+import { unsupportedRepositoryUrlError } from './errors';
 
 import { RepositoryFetcher, RepositoryInfo } from "./models";
 
@@ -50,6 +51,10 @@ export class GithubRepositoryFetcher implements RepositoryFetcher {
   }
 
   async fetch(repositoryUrl: string): Promise<RepositoryInfo> {
+    if (!this.canFetch(repositoryUrl)) {
+      unsupportedRepositoryUrlError(repositoryUrl);
+    }
+
     const basicInfo = GithubRepositoryFetcher.extractOwnerAndRepo(repositoryUrl);
 
     const partials = await Promise.all([
