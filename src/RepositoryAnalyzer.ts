@@ -1,4 +1,4 @@
-import { unsupportedRepositoryUrl } from "./errors";
+import { unsupportedRepositoryUrlError } from "./errors";
 import { Logger, RepositoryFetcher, RepositoryInfo } from "./models";
 
 export class RepositoryAnalyzer {
@@ -11,15 +11,13 @@ export class RepositoryAnalyzer {
     this.fetchers = this.fetchers.concat(fetcher);
   }
 
-  analyze(repositoryUrl: string): Promise<RepositoryInfo> {
+  async analyze(repositoryUrl: string): Promise<RepositoryInfo> {
     const repositoryFetcher = this.fetchers.find(fetcher => fetcher.canFetch(repositoryUrl));
 
     if (!repositoryFetcher) {
       this.logger.warn("Fetcher has not been found for the URL " + repositoryUrl);
-      return unsupportedRepositoryUrl(repositoryUrl);
+      unsupportedRepositoryUrlError(repositoryUrl);
     }
-
-    this.logger.log("Fetcher is found", { repositoryFetcher });
 
     return repositoryFetcher.fetch(repositoryUrl);
   }
