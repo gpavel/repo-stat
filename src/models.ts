@@ -1,6 +1,5 @@
 export interface CommitInfo {
-  title: string;
-  date: string;
+  message: string;
 }
 
 export interface RepositoryInfo {

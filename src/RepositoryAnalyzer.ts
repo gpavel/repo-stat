@@ -1,5 +1,5 @@
 import { unsupportedRepositoryUrl } from "./errors";
-import { Logger, RepositoryFetcher, RepositoryStatistic } from "./models";
+import { Logger, RepositoryFetcher, RepositoryInfo } from "./models";
 
 export class RepositoryAnalyzer {
   private fetchers: RepositoryFetcher[] = [];
@@ -11,7 +11,7 @@ export class RepositoryAnalyzer {
     this.fetchers = this.fetchers.concat(fetcher);
   }
 
-  analyze(repositoryUrl: string): Promise<RepositoryStatistic> {
+  analyze(repositoryUrl: string): Promise<RepositoryInfo> {
     const repositoryFetcher = this.fetchers.find(fetcher => fetcher.canFetch(repositoryUrl));
 
     if (!repositoryFetcher) {

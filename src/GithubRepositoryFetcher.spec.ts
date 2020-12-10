@@ -19,8 +19,8 @@ describe('GithubRepositoryFetcher', () => {
   });
 
   it('should fetch a github repository\'s statistic', async () => {
-    const user = 'gpavel';
-    const project = 'repo-stat';
+    const user = 'angular';
+    const project = 'angular';
     const stat = await fetcher.fetch(`https://github.com/${user}/${project}`);
 
     expect(stat).toEqual(jasmine.objectContaining({ user, project }));
