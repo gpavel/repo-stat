@@ -5,7 +5,7 @@ export class SimpleLogger implements Logger {
     console.error(...args);
   }
   log(...args: any[]): void {
-    console.log(...args);
+    console.table(args);
   }
   warn(...args: any[]): void {
     console.warn(...args);

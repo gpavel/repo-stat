@@ -20,3 +20,7 @@ export interface Logger {
   log(...args: any[]): void;
   warn(...args: any[]): void;
 }
+
+export interface RepositoryInfoPrinter {
+  print(repositoryUrl: string, info: RepositoryInfo): void;
+}
