@@ -1,10 +1,13 @@
+import { Octokit } from "@octokit/core";
 import { GithubRepositoryFetcher } from "./GithubRepositoryFetcher";
 
 describe('GithubRepositoryFetcher', () => {
   let fetcher: GithubRepositoryFetcher;
+  let octokit: Octokit;
 
   beforeEach(() => {
-    fetcher = new GithubRepositoryFetcher();
+    octokit = new Octokit()
+    fetcher = new GithubRepositoryFetcher(octokit);
   });
 
   it('should accept github repository URL', () => {
@@ -16,7 +19,14 @@ describe('GithubRepositoryFetcher', () => {
   });
 
   it('should fetch a github repository\'s statistic', async () => {
-    const stat = await fetcher.fetch('https://github.com/gpavel/repo-stat');
-    console.log(stat);
+    const user = 'gpavel';
+    const project = 'repo-stat';
+    const stat = await fetcher.fetch(`https://github.com/${user}/${project}`);
+
+    expect(stat).toEqual(jasmine.objectContaining({ user, project }));
+
+    expect(stat.stars).toBeGreaterThan(0);
+    expect(stat.commitsPerWeekOverYear).toBeGreaterThanOrEqual(0);
+    expect(stat.recentCommits.length).toBeLessThanOrEqual(3);
   });
 });

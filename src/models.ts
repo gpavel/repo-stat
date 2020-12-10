@@ -1,19 +1,19 @@
-export interface RepositoryCommitInfo {
+export interface CommitInfo {
   title: string;
   date: string;
 }
 
-export interface RepositoryStatistic {
+export interface RepositoryInfo {
   user: string;
   project: string;
   stars: number;
   commitsPerWeekOverYear: number;
-  recentCommits: RepositoryCommitInfo[];
+  recentCommits: CommitInfo[];
 }
 
 export interface RepositoryFetcher {
   canFetch(repositoryUrl: string): boolean;
-  fetch(repositoryUrl: string): Promise<RepositoryStatistic>;
+  fetch(repositoryUrl: string): Promise<RepositoryInfo>;
 }
 
 export interface Logger {
